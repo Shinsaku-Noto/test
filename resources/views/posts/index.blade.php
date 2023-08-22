@@ -20,6 +20,13 @@
                         </a>
                     </h2>
                 </div>
+                <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" onclick="deletePost({{ $post->id }})">
+                        delete
+                    </button>
+                </form>
             @endforeach
         </div>
         <div class="paginate">
@@ -27,4 +34,14 @@
         </div>
         <a href="/posts/create">create</a>
     </body>
+    
+    <script>
+        function deletePost(id) {
+            'use strict'
+            
+            if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                document.getElementById(`form_${id}`).submit();
+            }
+        }
+    </script>
 </html>
