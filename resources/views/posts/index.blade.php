@@ -9,32 +9,41 @@
 
         <!-- Styles -->
     </head>
-    <body class="antialiased">
-        <h1>Blog Name</h1>
-        <div class="posts">
-            @foreach ($posts as $post)
-                <div class="post">
-                    <h2 class="title">
-                        <a href="posts/{{ $post->id }}">
-                            {{ $post->title }}
-                        </a>
-                    </h2>
-                    <a href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a>
-                </div>
-                <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <button type="button" onclick="deletePost({{ $post->id }})">
-                        delete
-                    </button>
-                </form>
-            @endforeach
-        </div>
-        <div class="paginate">
-            {{ $posts->links() }}
-        </div>
-        <a href="/posts/create">create</a>
-    </body>
+    <x-app-layout>
+    <x-slot name="header">
+            　（ヘッダー名）
+        </x-slot>
+        <body class="antialiased">
+            <h1>Blog Name</h1>
+            <div class="posts">
+                @foreach ($posts as $post)
+                    <div class="post">
+                        <h2 class="title">
+                            <a href="posts/{{ $post->id }}">
+                                {{ $post->title }}
+                            </a>
+                        </h2>
+                        <a href="/categories/{{ $post->category->id }}">{{ $post->category->name }}</a>
+                    </div>
+                    <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" onclick="deletePost({{ $post->id }})">
+                            delete
+                        </button>
+                    </form>
+                @endforeach
+            </div>
+            <div class="paginate">
+                {{ $posts->links() }}
+            </div>
+            <a href="/posts/create">create</a>
+            
+            {{ Auth::user()->name }}
+
+        </body>
+    </x-app-layout>
+    
     
     <script>
         function deletePost(id) {
